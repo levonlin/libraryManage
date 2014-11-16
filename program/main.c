@@ -14,13 +14,17 @@ int main()
     do
     {
         menu();
-        printf("选择操作:");
+        printf("\t\t\t选择操作:");
         scanf("%d",&choice);
 		printf("\n");
-        if(choice>=0&&choice<=5)
+        if(choice>=0&&choice<=4)
             head=runMenu(head,choice);
             else
-                printf("选项输入错误，请再次输入！\n\n");
+			{
+				printf("\t\t\t选项输入错误，请按回车再次输入！\n\n");
+				getchar();
+				getchar();//两个getchar()防止过快清屏导致错过信息提示
+			}
     }while(choice);
     saveFile(head);
     return 0;

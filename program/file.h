@@ -1,11 +1,11 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include"list.h"
-void createFile();
-void saveFile(Node* head);
-Node* readFile(Node* head);
+void createFile();//创建文件
+void saveFile(Node* head);//读取文件
+Node* readFile(Node* head);//保存文件
 
-void createFile()
+void createFile()//创建文件
 {
     Type data;
     FILE *fp;
@@ -23,7 +23,7 @@ void createFile()
     }
     fclose(fp);
 }
-Node* readFile(Node* head)
+Node* readFile(Node* head)//读取文件
 {
     Type data;
     FILE* fp;
@@ -43,7 +43,7 @@ Node* readFile(Node* head)
     fclose(fp);
     return head;
 }
-void saveFile(Node* head)
+void saveFile(Node* head)//保存文件
 {
     Node* p=head;
     FILE* fp;

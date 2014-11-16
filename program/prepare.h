@@ -2,12 +2,12 @@
 #define _PREP
 #include"node.h"
 #include<string.h>
-void printNode(Type data);
-void readNode(Type* pdata);
-int equal(Type data1,Type data2,int condition);
-int larger(Type data1,Type data2,int condition);
+void printNode(Type data);//打印结点
+void readNode(Type* pdata);//输入结点
+int equal(Type data1,Type data2,int condition);//按条件判断结点是否相等
+int larger(Type data1,Type data2,int condition);//按条件判断结点大小
 
-void printNode(Type data)
+void printNode(Type data)//打印结点
 {
     int i;
 	printf("%s","索引号：");
@@ -22,8 +22,13 @@ void printNode(Type data)
     printf("%d\n",data.num);
     printf("%s","价格：");
 	printf("%f\n",data.prize);
-    printf("%s","入库日期：");
-	printf("%ld\n",data.inDate);
+	printf("%s","入库次数：");
+	printf("%d\n",data.inTimes);
+    printf("%s\n","入库日期：");
+	for(i=0;i<data.inTimes;i++)
+	{
+		printf("%ld\n",data.inDate[i]);
+	}
     printf("%s","借阅次数：");
 	printf("%d\n",data.borTimes);
     printf("%s","借阅状况：");
@@ -35,13 +40,13 @@ void printNode(Type data)
 	}
 	printf("\n");
 }
-void readNode(Type* pdata)
+void readNode(Type* pdata)//输入结点
 {
     int i;
-    printf("输入该批图书信息（以图书数量为零结束）：\n");
+    printf("输入该批图书信息（以图书数量小于等于零结束）：\n");
     printf("数量：");
     scanf("%d",&pdata->num);
-	if(pdata->num==0)
+	if(pdata->num<=0)
 	{
 		printf("\n");
 		return;
@@ -56,16 +61,17 @@ void readNode(Type* pdata)
     printf("类别（人文、科技、外语等）：");
     scanf("%s",&pdata->class);
     printf("价格：");
-    scanf("%lf",&pdata->prize);//
+    scanf("%lf",&pdata->prize);//scanf输入double必须为%lf
+    pdata->inTimes=1;
     printf("入库日期（yyyymmdd）：");
-    scanf("%ld",&pdata->inDate);
+    scanf("%ld",&pdata->inDate[0]);
     for(i=0;i<pdata->num;i++)
     pdata->backDate[i]=0;//建立long指针型数组存储归还日期，数组中各值初始化为0
     pdata->borTimes=0;
     pdata->borSitu="可借";
 	printf("\n");
 }
-int equal(Type data1,Type data2,int condition)
+int equal(Type data1,Type data2,int condition)//按条件判断结点是否相等
 {
     int i,a;
     if(condition==1)
@@ -81,7 +87,7 @@ int equal(Type data1,Type data2,int condition)
         }
      return 0;
 }
-int larger(Type data1,Type data2,int condition)
+int larger(Type data1,Type data2,int condition)//按条件判断结点大小
 {
     if(condition==1)
         return (strcmp(data1.ID,data2.ID)>0);//ID已变为字符数组

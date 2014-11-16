@@ -2,29 +2,35 @@
 #include<stdlib.h>
 #include<string.h>
 #include"file.h"
-void menu();
-Node* runMenu(Node* head,int choice);
-void ifoMenu();
-Node* addBooks(Node* head,Type data);
-Node* deleteBooks(Node* head,Type data);
-Node* borrowBooks(Node* head,Type data);
-Node* returnBooks(Node* head,Type data);
-Node* ifoManage(Node* head);
-void searchWithName(Node* head);
-void searchWithBackate(Node* head);
-Node* range(Node* head);
+void menu();//主菜单
+Node* runMenu(Node* head,int choice);//运行主菜单
+void ifoMenu();//信息更新菜单
+void addMenu();//添加菜单
+Node* addBooks1(Node* head,Type data);//添加新图书
+Node* addBooks2(Node* head,Type data);//添加原有图书
+Node* addManage(Node* head,Type data);//运行添加菜单
+Node* deleteBooks(Node* head,Type data);//删除图书
+Node* borrowBooks(Node* head,Type data);//借书
+Node* returnBooks(Node* head,Type data);//还书
+Node* ifoManage(Node* head);//运行信息更新菜单
+void searchWithName(Node* head);//按图书名称查找
+void searchWithBackate(Node* head);//查找归还日期在三天以内的图书
+Node* range(Node* head);//按借阅次数排序
 
-void menu()
+void menu()//主菜单
 {
-	printf("-----主菜单-----\n");
-    printf("1.图书信息更新\n");
-    printf("2.按书名查询图书信息\n");
-    printf("3.显示所有即将到期（三天之内）的图书\n");
-    printf("4.图书按借阅次数排序\n");
-    printf("0.退出管理系统\n");
+	system("cls");
+	printf("\n\n\n\n\n\t\t**********欢迎使用南邮图书馆管理系统**********\t\t\n");
+	printf("\n");
+	printf("\t\t\t---------主菜单---------\n");
+    printf("\t\t\t1.图书信息更新\n");
+    printf("\t\t\t2.按书名查询图书信息\n");
+    printf("\t\t\t3.显示所有即将到期（三天之内）的图书\n");
+    printf("\t\t\t4.图书按借阅次数排序\n");
+    printf("\t\t\t0.退出管理系统\n");
     return;
 }
-Node* runMenu(Node* head,int choice)
+Node* runMenu(Node* head,int choice)//运行主菜单
 {
   switch(choice)
         {
@@ -40,33 +46,109 @@ Node* runMenu(Node* head,int choice)
         }
         return head;
 }
-void ifoMenu()
+void ifoMenu()//信息更新菜单
 {
-	printf("-----图书信息更新-----\n");
-    printf("1.添加图书\n");
-    printf("2.删除图书信息\n");
-    printf("3.借阅\n");
-	printf("4.还书\n");
-    printf("0.返回主菜单\n");
+	system("cls");
+	printf("\n\n\n\n\n\t\t\t---------图书信息更新---------\n");
+    printf("\t\t\t1.添加图书\n");
+    printf("\t\t\t2.删除图书信息\n");
+    printf("\t\t\t3.借阅\n");
+	printf("\t\t\t4.还书\n");
+    printf("\t\t\t0.返回主菜单\n");
 }
-Node* addBooks(Node* head,Type data)
+void addMenu()//添加菜单
 {
-   readNode(&data);
-   head=InsertOrder(head,data,1);
+	system("cls");
+	printf("\n\n\n\n\n\t\t\t---------添加图书---------\n");
+	printf("\t\t\t1.添加新图书\n");
+    printf("\t\t\t2.添加原有图书\n");
+	printf("\t\t\t0.返回上级菜单\n");
+}
+Node* addBooks1(Node* head,Type data)//添加新图书
+{
+	system("cls");
+	while(1)
+	{
+		readNode(&data);
+		if(data.num<=0)
+			break;
+		head=InsertOrder(head,data,1);
+		printf("添加成功！\n");
+	}
    return head;
 }
-Node* deleteBooks(Node* head,Type data)
+Node* addBooks2(Node* head,Type data)//添加原有图书
 {
-   printf("输入欲删除图书索引号：");
+   int addnum;
+   Node* p=NULL;
+   system("cls");
+   printf("输入原有图书索引号：");
    scanf("%s",&data.ID);
-   head=Delete(head,data);
+   if(p=SearchNode(head,data,1))
+   {	printf("添加书本数量（大于零本）：");
+        scanf("%d",&addnum);
+		if(addnum>0)
+		{
+			printf("添加入库日期（yyyyddmm）：");
+			scanf("%ld",&(p->data.inDate[p->data.inTimes]));
+			p->data.num+=addnum;
+			p->data.num1+=addnum;
+			p->data.inTimes++;
+			printf("添加成功！\n");
+		}
+		else
+			printf("添加数量不正确\n");
+   }
+   else
+	   printf("图书馆中无此书！\n");
+       getchar();
+	   getchar();
    printf("\n");
    return head;
 }
-Node* borrowBooks(Node* head,Type data)
+Node* addManage(Node* head,Type data)//运行添加菜单
+{
+	int choice;
+	do
+	{
+		addMenu();
+        printf("\t\t\t选择操作:");
+        scanf("%d",&choice);
+		printf("\n");
+		if(choice>=0&&choice<=2)
+            switch(choice)
+			{
+				case 1:head=addBooks1(head,data);
+						break;
+				case 2:head=addBooks2(head,data);
+						break;
+				case 0:break;
+			}
+				else
+                {
+					printf("\t\t\t选项输入错误，请按回车再次输入！\n\n");
+					getchar();
+					getchar();
+				}
+	}while(choice);
+	return head;
+}
+Node* deleteBooks(Node* head,Type data)//删除图书
+{
+   system("cls");
+   printf("输入欲删除图书索引号：");
+   scanf("%s",&data.ID);
+   head=Delete(head,data);
+   getchar();
+   getchar();
+   printf("\n");
+   return head;
+}
+Node* borrowBooks(Node* head,Type data)//借书
 {
   int i,bornum;
   Node* p=NULL;
+  system("cls");
   printf("输入欲借阅图书索引号：");
   scanf("%s",&data.ID);
   if(p=SearchNode(head,data,1))//必须有if防p指空
@@ -82,6 +164,7 @@ Node* borrowBooks(Node* head,Type data)
 		  (p->data).borTimes++;
 		  if((p->data).num==0)
 			  (p->data).borSitu="不可借";
+		  printf("借阅成功！");
 	  }//对data进行借阅操作
 	}
 	else
@@ -89,14 +172,17 @@ Node* borrowBooks(Node* head,Type data)
   }
   else
 	  printf("图书馆中无此书！\n");
+      getchar();
+	  getchar();
   printf("\n");
   return head;
 }
-Node* returnBooks(Node* head,Type data)
+Node* returnBooks(Node* head,Type data)//还书
 {
   int i,j,k,retnum;
   long pos;
   Node* p=NULL;
+  system("cls");
   printf("输入欲归还图书索引号：");
   scanf("%s",&data.ID);
   if(p=SearchNode(head,data,1))
@@ -125,52 +211,62 @@ Node* returnBooks(Node* head,Type data)
 			  continue;
 		  }
 		  else
-		  (p->data).num++;	
-		  
+		  (p->data).num++;			  
 	  }//对data进行归还操作
 	  (p->data).borSitu="可借";
+	  printf("归还成功！");
 	}
 	else
 	   printf("所还图书数量过多或过少！\n");
   }
   else
 	  printf("图书馆中无此书！\n");
+      getchar();
+	  getchar();
   printf("\n");
   return head;
 }
-Node* ifoManage(Node* head)
+Node* ifoManage(Node* head)//运行信息更新菜单
 {
     int choice;
     Type data;
     do
     {
         ifoMenu();
-        printf("选择操作:");
+        printf("\t\t\t选择操作:");
         scanf("%d",&choice);
 		printf("\n");
-        switch(choice)
-        {
-            case 1:head=addBooks(head,data);
-					saveFile(head);
-                    break;
-            case 2:head=deleteBooks(head,data);
-					saveFile(head);
-                    break;
-            case 3:head=borrowBooks(head,data);
-					saveFile(head);
-                    break;
-			case 4:head=returnBooks(head,data);
-					saveFile(head);
-                    break;
-            case 0:break;
+		if(choice>=0&&choice<=4)
+             switch(choice)
+			{
+				case 1:head=addManage(head,data);
+						saveFile(head);
+						break;
+				case 2:head=deleteBooks(head,data);
+						saveFile(head);
+						break;
+				case 3:head=borrowBooks(head,data);
+						saveFile(head);
+						break;
+				case 4:head=returnBooks(head,data);
+						saveFile(head);
+						break;
+				case 0:break;
         }
+            else
+			{
+                printf("\t\t\t选项输入错误，请按回车再次输入！\n\n");
+				getchar();
+		        getchar();
+			}
     }while(choice);
     return head;
 }
-void searchWithName(Node* head)
+void searchWithName(Node* head)//按图书名称查找
 {
    Type data;
    Node* p=head,* head1=NULL;
+   system("cls");
    printf("输入欲搜图书书名：\n");
    scanf("%s",data.name);
    printf("\n");
@@ -188,12 +284,15 @@ void searchWithName(Node* head)
         }
    else
       printf("图书馆中无此书！\n");
+      getchar();
+	  getchar();
    printf("\n");
 }
-void searchWithBackate(Node* head)
+void searchWithBackate(Node* head)//查找归还日期在三天以内的图书
 {
    Type data;
    Node* p=head,* head1=NULL;
+   system("cls");
    printf("输入今日日期（yyyymmdd）:\n");
       scanf("%ld",&data.backDate[0]);
        printf("\n");
@@ -211,11 +310,14 @@ void searchWithBackate(Node* head)
         }
    else
       printf("图书馆中无归还日期三天之内的书！\n");
+      getchar();
+      getchar();
    printf("\n");
 }
-Node* range(Node* head)
+Node* range(Node* head)//按借阅次数排序
 {
     Node* headOrder=NULL,* p=head;
+	system("cls");
     while(p)
     {
         headOrder=InsertOrder(headOrder,p->data,2);
@@ -229,6 +331,8 @@ Node* range(Node* head)
         }
 	else
       printf("图书馆无书！\n");
+      getchar();
+      getchar();
 	printf("\n");
     return headOrder;
 }

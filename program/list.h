@@ -1,14 +1,14 @@
 #ifndef _LIST
 #define _LIST
 #include"prepare.h"
-Node* PrintList(Node* head);
-Node* SearchNode(Node* head,Type data,int condition);
-Node* InsertAfter(Node* head,Type data);
-Node* InsertOrder(Node* head,Type data,int condition);
-Node* Delete(Node* head,Type data);
-Node* Reverse(Node* head);
+Node* PrintList(Node* head);//打印链表
+Node* SearchNode(Node* head,Type data,int condition);//查找结点
+Node* InsertAfter(Node* head,Type data);//后序插入
+Node* InsertOrder(Node* head,Type data,int condition);//按序插入
+Node* Delete(Node* head,Type data);//删除结点
+Node* Reverse(Node* head);//链表转置
 
-Node* PrintList(Node* head)
+Node* PrintList(Node* head)//打印链表
 {
   Node* p;
   if(head==NULL)
@@ -22,7 +22,7 @@ Node* PrintList(Node* head)
   printf("\n");
   return head;
 }
-Node* SearchNode(Node* head,Type data,int condition)
+Node* SearchNode(Node* head,Type data,int condition)//查找结点
 {
     Node* p=head;
     if(head==NULL)
@@ -39,7 +39,7 @@ Node* SearchNode(Node* head,Type data,int condition)
         return p;
     return 0;
 }
-Node* InsertAfter(Node* head,Type data)
+Node* InsertAfter(Node* head,Type data)//后序插入
 {
     Node* p,* p1;
     p=(Node* )malloc(size);
@@ -58,7 +58,7 @@ Node* InsertAfter(Node* head,Type data)
     p1->next=p;
     return head;
 }
-Node* InsertOrder(Node* head,Type data,int condition)
+Node* InsertOrder(Node* head,Type data,int condition)//按序插入
 {
     Node* p,* p1,* p2;
     p2=head;
@@ -82,7 +82,7 @@ Node* InsertOrder(Node* head,Type data,int condition)
 	p->next=p2;
     return head;
 }
-Node* Delete(Node* head,Type data)
+Node* Delete(Node* head,Type data)//删除结点
 {
     Node* p=head,*q=NULL;
     if(head==NULL)
@@ -103,13 +103,14 @@ Node* Delete(Node* head,Type data)
             else
                 head=head->next;
             free(p);
+			printf("删除成功！\n");
     }
     else
     printf("图书馆中无此书！\n");
 	printf("\n");
     return head;
 }
-Node* Reverse(Node* head)
+Node* Reverse(Node* head)//链表转置
 {
     Node* p=head,*q;
     head=NULL;
