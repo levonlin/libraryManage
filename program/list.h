@@ -7,12 +7,14 @@ Node* InsertAfter(Node* head,Type data);
 Node* InsertOrder(Node* head,Type data,int condition);
 Node* Delete(Node* head,Type data);
 Node* Reverse(Node* head);
+
 Node* PrintList(Node* head)
 {
   Node* p;
   if(head==NULL)
   {
-      printf("记录为空！\n");
+      printf("图书馆无书！\n");
+	  printf("\n");
       return NULL;
   }
   for(p=head;p;p=p->next)
@@ -25,7 +27,8 @@ Node* SearchNode(Node* head,Type data,int condition)
     Node* p=head;
     if(head==NULL)
     {
-        printf("记录为空！\n");
+        printf("图书馆无书！\n");
+		printf("\n");
         return 0;
     }
     while(p&&!equal(p->data,data,condition))
@@ -84,7 +87,8 @@ Node* Delete(Node* head,Type data)
     Node* p=head,*q=NULL;
     if(head==NULL)
     {
-    printf("记录为空！\n");
+    printf("图书馆无书！\n");
+	printf("\n");
     return head;
     }
     while(p&&!equal(p->data,data,1))
@@ -102,6 +106,7 @@ Node* Delete(Node* head,Type data)
     }
     else
     printf("图书馆中无此书！\n");
+	printf("\n");
     return head;
 }
 Node* Reverse(Node* head)

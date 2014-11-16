@@ -6,7 +6,7 @@ struct book
     char name[20];
     char loc[10];
     char class[10];
-    int  num,num1;//num1记录书的初始数量
+    int  num,num1;//num记录书的在库数量，num1记录书的总数量
     double prize;
     long inDate;
     long backDate[1000];

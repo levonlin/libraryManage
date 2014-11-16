@@ -2,6 +2,11 @@
 #define _PREP
 #include"node.h"
 #include<string.h>
+void printNode(Type data);
+void readNode(Type* pdata);
+int equal(Type data1,Type data2,int condition);
+int larger(Type data1,Type data2,int condition);
+
 void printNode(Type data)
 {
     int i;
@@ -24,10 +29,8 @@ void printNode(Type data)
     printf("%s","借阅状况：");
 	printf("%s\n",data.borSitu);
     printf("%s\n","归还日期：");
-	for(i=0;i<data.num1;i++)
+	for(i=0;i<(data.num1-data.num);i++)
 	{
-		if(data.backDate[i]==0)
-			continue;
 		printf("%ld\n",data.backDate[i]);
 	}
 	printf("\n");
@@ -56,12 +59,6 @@ void readNode(Type* pdata)
     scanf("%lf",&pdata->prize);//
     printf("入库日期（yyyymmdd）：");
     scanf("%ld",&pdata->inDate);
-    /*pdata->backDate=(long*)malloc((pdata->num)*(sizeof(long)));
-    if(pdata->backDate==NULL)
-    {
-        printf("Allocation failure!");
-        exit(1);
-    }*/
     for(i=0;i<pdata->num;i++)
     pdata->backDate[i]=0;//建立long指针型数组存储归还日期，数组中各值初始化为0
     pdata->borTimes=0;
@@ -76,7 +73,7 @@ int equal(Type data1,Type data2,int condition)
     else if(condition==2)
 	return (strcmp(data1.name,data2.name)==0);
     else if(condition==3)
-        for(i=0;i<data1.num;i++)
+        for(i=0;i<(data1.num1-data1.num);i++)
         {
          a=data1.backDate[i]-data2.backDate[0];
          if(a>=0&&a<=3)
@@ -87,7 +84,7 @@ int equal(Type data1,Type data2,int condition)
 int larger(Type data1,Type data2,int condition)
 {
     if(condition==1)
-        return data1.ID>data2.ID;
+        return (strcmp(data1.ID,data2.ID)>0);//ID已变为字符数组
     if(condition==2)
         return data1.borTimes>data2.borTimes;
     return 1;

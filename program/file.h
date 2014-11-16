@@ -1,6 +1,10 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include"list.h"
+void createFile();
+void saveFile(Node* head);
+Node* readFile(Node* head);
+
 void createFile()
 {
     Type data;
@@ -8,6 +12,7 @@ void createFile()
     if((fp=fopen("library.dat","wb"))==NULL)
     {
         printf("library.dat无法打开！\n");
+		printf("\n");
         exit(0);
     }
     readNode(&data);
@@ -25,7 +30,8 @@ Node* readFile(Node* head)
     head=NULL;
     if((fp=fopen("library.dat","rb"))==NULL)
     {
-        printf("library.dat不存在，请先建立文件！\n");
+        printf("library.dat不存在，建立文件中...\n");
+		printf("\n");
         return(0);
     }
     fread(&data,sizeBook,1,fp);
@@ -44,11 +50,13 @@ void saveFile(Node* head)
     if((fp=fopen("library.dat","wb"))==NULL)
     {
         printf("library.dat无法打开！\n");
+		printf("\n");
         exit(0);
     }
     if(head==NULL)
     {
-        printf("记录为空！\n");
+        printf("图书馆无书！\n");
+		printf("\n");
         return ;
     }
     while(p)
